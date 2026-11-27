@@ -48,6 +48,7 @@ class MainWindow(QWidget):
             reverse=self.state["reverse"],
             dim=self.state["dim"],
         )
+        self._place_ruler_at_start()
         self.popup = SettingsPopup()
         self.reader = ReadingController(
             self.ruler, lambda: read_setting("reader/language"),
@@ -79,6 +80,19 @@ class MainWindow(QWidget):
         self.ruler.show_buttons()
         self._refresh_state()
 
+    def _place_ruler_at_start(self):
+        """Ao abrir, a régua vai para a direita, um pouco acima do meio da tela,
+        para não ficar em cima da janela inicial (que abre centralizada)."""
+        screen = QGuiApplication.primaryScreen()
+        if screen is None:
+            return
+        area = screen.availableGeometry()
+        buttons_room = 190      # fileira de botões ao lado da régua + folga
+        x = max(area.left() + 10, area.right() - self.ruler.width() - buttons_room)
+        y = area.top() + int(area.height() * 0.30)
+        self.ruler.move_ruler(x, y, screen)
+        self._save_ruler_position()
+
     # ------------------------------------------------------------------ interface
     def _build_ui(self):
         outer = QVBoxLayout(self)
@@ -97,17 +111,13 @@ class MainWindow(QWidget):
 
         title = QLabel("Leitura Acessível")
         title.setObjectName("title")
-        subtitle = QLabel("Um espaço de leitura no seu ritmo.")
-        subtitle.setObjectName("subtitle")
         layout.addWidget(title)
-        layout.addWidget(subtitle)
 
         self.status = QLabel("● Régua ativa")
         layout.addWidget(self.status)
 
         if not font_found():
-            warn = QLabel("A fonte OpenDyslexic não foi encontrada. Rode preparar_offline.py ou copie os "
-                          ".otf para a pasta fonts/ (veja fonts/LEIAME.txt) e reabra o programa.")
+            warn = QLabel("Fonte OpenDyslexic não encontrada (veja fonts/LEIAME.txt).")
             warn.setWordWrap(True)
             warn.setStyleSheet("color:#9A5B00;font-size:8.5pt;")
             layout.addWidget(warn)
@@ -132,11 +142,7 @@ class MainWindow(QWidget):
         panel_layout.addWidget(heading)
         self.controls = RulerControls()
         panel_layout.addWidget(self.controls)
-        hint = QLabel("Dica: arraste a régua com o botão esquerdo do mouse para movê-la e arraste as "
-                      "bordas ou os cantos dela para mudar a altura e a largura. Para isso, desative "
-                      "temporariamente a opção de cliques por baixo. Os botões ao lado da régua "
-                      "(▶, liga/desliga a régua e engrenagem) ficam fora da faixa de leitura; a engrenagem abre "
-                      "uma caixa com estas mesmas opções.")
+        hint = QLabel("Mova a régua pela alça ⠿ e redimensione arrastando as bordas.")
         hint.setWordWrap(True)
         hint.setStyleSheet("color:#65718A;font-size:8.5pt;")
         panel_layout.addWidget(hint)
@@ -149,6 +155,9 @@ class MainWindow(QWidget):
         ai_layout.setSpacing(10)
         ai_heading = QLabel("Leitura em voz alta (100% local)")
         ai_heading.setObjectName("heading")
+        ai_heading.setToolTip("Ao soltar a régua sobre um texto, o programa fotografa só a área sob ela, "
+                              "o OCR do computador (Tesseract) lê o texto e a voz do Windows fala. "
+                              "Tudo roda neste computador, sem internet.")
         ai_layout.addWidget(ai_heading)
         lang_row = QHBoxLayout()
         lang_row.addWidget(QLabel("Idioma do texto"))
@@ -161,13 +170,6 @@ class MainWindow(QWidget):
         self.language_combo.setCurrentIndex(max(0, index))
         lang_row.addWidget(self.language_combo)
         ai_layout.addLayout(lang_row)
-        ai_hint = QLabel("Ao soltar a régua sobre um texto, o programa fotografa só a área sob ela, "
-                         "o OCR do computador (Tesseract) lê o texto e a voz do Windows fala; mover "
-                         "a régua de novo interrompe a leitura. O botão ▶ lê sob demanda. Tudo roda "
-                         "neste computador, sem internet e sem enviar nada para fora.")
-        ai_hint.setWordWrap(True)
-        ai_hint.setStyleSheet("color:#65718A;font-size:8.5pt;")
-        ai_layout.addWidget(ai_hint)
         layout.addWidget(ai_panel)
 
         self.quit_button = QPushButton("Encerrar programa")
@@ -175,7 +177,7 @@ class MainWindow(QWidget):
         self.quit_button.setToolTip("Fechar esta janela só a esconde; o programa continua em segundo plano. Use este botão para sair de vez.")
         layout.addWidget(self.quit_button)
 
-        footer = QLabel("Protótipo 0.6 • Preferências salvas automaticamente")
+        footer = QLabel("Versão 1.0 • Preferências salvas automaticamente")
         footer.setStyleSheet("color:#7A8499;font-size:8pt;")
         layout.addWidget(footer)
 

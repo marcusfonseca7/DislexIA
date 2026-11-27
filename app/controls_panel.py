@@ -1,9 +1,39 @@
 """Controles de personalização da régua, reutilizados na caixa da engrenagem
 e na janela do sistema. Só emitem sinais; quem aplica é a MainWindow."""
-from PySide6.QtCore import Qt, Signal
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QSlider, QCheckBox
+from PySide6.QtCore import Qt, Signal, QPointF
+from PySide6.QtGui import QColor, QPainter, QPen
+from PySide6.QtWidgets import (
+    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QSlider, QCheckBox,
+    QStyle, QStyleOptionButton
+)
 
 from app.settings import DIM_RANGE, HEIGHT_RANGE, WIDTH_RANGE
+
+
+class AccessibleCheckBox(QCheckBox):
+    """Checkbox grande, com borda forte e um 'V' branco bem visível quando marcado."""
+
+    def paintEvent(self, event):
+        super().paintEvent(event)
+        if not self.isChecked():
+            return
+        option = QStyleOptionButton()
+        self.initStyleOption(option)
+        box = self.style().subElementRect(QStyle.SubElement.SE_CheckBoxIndicator, option, self)
+        if box.isEmpty():
+            return
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        pen = QPen(QColor("#FFFFFF"), 2.6)
+        pen.setCapStyle(Qt.PenCapStyle.RoundCap)
+        pen.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
+        painter.setPen(pen)
+        x, y, w, h = box.x(), box.y(), box.width(), box.height()
+        painter.drawPolyline([
+            QPointF(x + w * 0.24, y + h * 0.53),
+            QPointF(x + w * 0.43, y + h * 0.72),
+            QPointF(x + w * 0.77, y + h * 0.31),
+        ])
 
 
 class RulerControls(QWidget):
@@ -33,7 +63,7 @@ class RulerControls(QWidget):
         color_row.addWidget(self.color_button)
         layout.addLayout(color_row)
 
-        self.reverse = QCheckBox("Régua reversa (escurece o resto da tela)")
+        self.reverse = AccessibleCheckBox("Régua reversa")
         self.reverse.setToolTip("Em vez de colorir a faixa, a régua fica transparente e o resto da tela "
                                 "escurece, para você focar só no trecho iluminado.")
         layout.addWidget(self.reverse)
@@ -44,15 +74,15 @@ class RulerControls(QWidget):
         self.height_slider = self._add_slider(layout, "Altura", HEIGHT_RANGE[0], HEIGHT_RANGE[1], " px")
         self.width_slider = self._add_slider(layout, "Largura", WIDTH_RANGE[0], WIDTH_RANGE[1], " px")
 
-        self.full_width = QCheckBox("Régua em largura total da tela")
+        self.full_width = AccessibleCheckBox("Largura total da tela")
         self.full_width.setToolTip("A régua ocupa a tela inteira na horizontal; ao arrastar, ela só se move para cima e para baixo.")
         layout.addWidget(self.full_width)
 
-        self.click_through = QCheckBox("Permitir cliques no conteúdo abaixo")
+        self.click_through = AccessibleCheckBox("Permitir cliques no conteúdo abaixo")
         self.click_through.setToolTip("Ao ativar, a régua ignora o mouse. Desative para voltar a movê-la.")
         layout.addWidget(self.click_through)
 
-        self.auto_read = QCheckBox("Ler em voz alta ao mover a régua")
+        self.auto_read = AccessibleCheckBox("Ler em voz alta ao mover a régua")
         self.auto_read.setToolTip("Ao soltar a régua sobre um texto, ele é lido automaticamente. "
                                   "Mover a régua de novo interrompe a leitura.")
         layout.addWidget(self.auto_read)

@@ -14,12 +14,12 @@ DEFAULTS = {
     "ruler/reverse": False,
     "ruler/dim": 70,
     "reader/language": "pt-BR",
-    "reader/auto_read": True,
+    "reader/auto_read": False,
 }
 
 # Limites de tamanho da régua (valem para os controles deslizantes e para o arrasto das bordas).
 HEIGHT_RANGE = (24, 300)
-WIDTH_RANGE = (200, 2400)
+WIDTH_RANGE = (50, 2400)
 DIM_RANGE = (10, 95)
 
 

@@ -17,6 +17,7 @@ COLORS = {
     "power_off": "#7A8499",    # régua desativada (clicar ativa)
     "play": "#23835D",
     "stop": "#B3402F",
+    "grip": "#334E8C",         # alça para mover a régua
 }
 
 
@@ -62,6 +63,9 @@ class RulerButton(QWidget):
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         w, h = self.width(), self.height()
         s = min(w, h)
+        if self._kind == "grip":
+            self._paint_grip(painter, s)
+            return
         bg = QColor(COLORS[self._kind])
         if self._pressed:
             bg = bg.darker(145)
@@ -94,6 +98,23 @@ class RulerButton(QWidget):
             self._draw_repeat(painter, s, white)
         elif self._kind in ("power_on", "power_off"):
             self._draw_power(painter, s, white)
+
+    def _paint_grip(self, painter, s):
+        """Só os 6 pontos (2 colunas x 3 linhas), sem círculo de fundo."""
+        # Fundo quase invisível (alpha 1): mantém a área agarrável com o mouse.
+        painter.setPen(Qt.PenStyle.NoPen)
+        painter.setBrush(QColor(0, 0, 0, 1))
+        painter.drawRect(self.rect())
+        center = QPointF(self.width() / 2, self.height() / 2)
+        color = QColor("#1F3566") if (self._hover or self._pressed) else QColor("#334E8C")
+        dot = s * 0.085
+        for col in (-0.16, 0.16):
+            for row in (-0.26, 0.0, 0.26):
+                c = center + QPointF(col * s, row * s)
+                painter.setBrush(QColor("#FFFFFF"))       # contorno claro: aparece em fundo escuro
+                painter.drawEllipse(c, dot + 1.6, dot + 1.6)
+                painter.setBrush(color)
+                painter.drawEllipse(c, dot, dot)
 
     @staticmethod
     def _draw_gear(painter, s, white, bg):
@@ -161,6 +182,45 @@ class RulerButton(QWidget):
             self.update()
             if self.rect().contains(event.position().toPoint()):
                 self.clicked.emit()
+            event.accept()
+        else:
+            event.ignore()
+
+
+class GripButton(RulerButton):
+    """Alça de 6 pontos: arrastá-la move a régua, mesmo com a régua desligada."""
+    pressed_at = Signal(object)      # posição global ao apertar
+    dragged_to = Signal(object)      # posição global durante o arrasto
+    released_at = Signal(object)     # posição global ao soltar
+
+    def __init__(self):
+        super().__init__("grip", "Arraste para mover a régua")
+        self.setCursor(Qt.CursorShape.SizeAllCursor)
+        self._dragging = False
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton:
+            self._pressed = True
+            self._dragging = True
+            self.update()
+            self.pressed_at.emit(event.globalPosition().toPoint())
+            event.accept()
+        else:
+            event.ignore()
+
+    def mouseMoveEvent(self, event):
+        if self._dragging:
+            self.dragged_to.emit(event.globalPosition().toPoint())
+            event.accept()
+        else:
+            event.ignore()
+
+    def mouseReleaseEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton and self._dragging:
+            self._dragging = False
+            self._pressed = False
+            self.update()
+            self.released_at.emit(event.globalPosition().toPoint())
             event.accept()
         else:
             event.ignore()

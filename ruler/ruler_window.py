@@ -12,7 +12,7 @@ from PySide6.QtWidgets import QWidget
 
 from app.settings import HEIGHT_RANGE, WIDTH_RANGE
 from ruler.dim_overlay import DimOverlay
-from ruler.ruler_buttons import RulerButton
+from ruler.ruler_buttons import GripButton, RulerButton
 
 EDGE_LEFT, EDGE_RIGHT, EDGE_TOP, EDGE_BOTTOM = 1, 2, 4, 8
 
@@ -61,7 +61,15 @@ class RulerWindow(QWidget):
         self.play_button = RulerButton("play", "Ler em voz alta o texto sob a régua")
         self.power_button = RulerButton("power_on", "Desativar régua")
         self.gear = RulerButton("gear", "Abrir configurações")
-        self.buttons = [self.play_button, self.power_button, self.gear]
+        # Alça (6 pontos): move a régua mesmo quando ela está desligada.
+        self.grip = GripButton()
+        self.grip.pressed_at.connect(self._grip_pressed)
+        self.grip.dragged_to.connect(self._grip_dragged)
+        self.grip.released_at.connect(self._grip_released)
+        self._grip_origin = None
+        self._grip_start = None
+        self._grip_moved = False
+        self.buttons = [self.play_button, self.power_button, self.gear, self.grip]
 
         self.setWindowTitle("Régua de leitura")
         self.setWindowFlags(
@@ -243,6 +251,36 @@ class RulerWindow(QWidget):
     def hideEvent(self, event):
         super().hideEvent(event)
         self.overlay.hide()
+
+    # ------------------------------------------------------------------ alça de arrastar
+    def _grip_pressed(self, pos):
+        self._grip_origin = pos
+        self._grip_start = self.pos()
+        self._grip_moved = False
+
+    def _grip_dragged(self, pos):
+        if self._grip_origin is None:
+            return
+        delta = pos - self._grip_origin
+        if not self._grip_moved:
+            if abs(delta.x()) + abs(delta.y()) < 4:      # ignora cliques "tremidos"
+                return
+            self._grip_moved = True
+            self.drag_started.emit()
+        target = self._grip_start + delta
+        screen = QGuiApplication.screenAt(pos) if self._full_width else None
+        self.move_ruler(target.x(), target.y(), screen)
+        # Com a régua escondida o Qt não avisa que ela andou: reposiciona os botões à mão.
+        self._sync_buttons()
+
+    def _grip_released(self, _pos):
+        if self._grip_origin is None:
+            return
+        self._grip_origin = None
+        self.position_committed.emit()
+        if self._grip_moved:
+            self._grip_moved = False
+            self.user_moved.emit()
 
     # ------------------------------------------------------------------ clique-transparente
     def set_click_through(self, enabled):

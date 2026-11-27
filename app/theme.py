@@ -66,7 +66,13 @@ def build_stylesheet():
         QSlider::handle:horizontal {{ background: #334E8C; width: 16px; margin: -5px 0; border-radius: 8px; }}
         QSlider::groove:horizontal:disabled {{ background: #ECEFF5; }}
         QSlider::handle:horizontal:disabled {{ background: #AEB8D0; }}
-        QCheckBox {{ spacing: 8px; }}
+        QCheckBox {{ spacing: 10px; padding: 3px 0; }}
+        QCheckBox::indicator {{ width: 22px; height: 22px; border: 2px solid #5A6A8F; border-radius: 6px; background: white; }}
+        QCheckBox::indicator:hover {{ border-color: #334E8C; background: #EAF0FB; }}
+        QCheckBox::indicator:checked {{ background: #334E8C; border-color: #334E8C; }}
+        QCheckBox::indicator:checked:hover {{ background: #263D70; border-color: #263D70; }}
+        QCheckBox::indicator:disabled {{ border-color: #C3CADB; background: #EEF1F7; }}
+        QCheckBox::indicator:checked:disabled {{ background: #AEB8D0; border-color: #AEB8D0; }}
         QLineEdit {{ background: white; border: 1px solid #C9D1E3; border-radius: 9px; padding: 9px 10px; }}
         QLineEdit:focus {{ border: 1px solid #334E8C; }}
         QComboBox {{ background: white; border: 1px solid #C9D1E3; border-radius: 9px; padding: 8px 10px; }}
