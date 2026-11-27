@@ -31,10 +31,6 @@
           ><a href="#sobre">Sobre</a>
         </nav>
         <div class="rt">
-          <div
-            data-authbox
-            style="display: flex; align-items: center; gap: 6px"
-          ></div>
           <a class="btn dlbtn" href="#download" style="padding: 12px 22px"
             >Baixar Agora</a
           >
@@ -193,8 +189,7 @@
         <div class="wrap">
           <h2 class="h rv">Funcionalidades</h2>
           <p class="lead rv">
-            Texto provisório: o que o dislexIA oferece para tornar a leitura
-            mais acessível.
+            O que o dislexIA oferece para tornar a leitura mais acessível.
           </p>
           <div class="bento" id="bento"></div>
         </div>
@@ -203,7 +198,6 @@
       <section id="sobre" class="s alt">
         <div class="wrap">
           <h2 class="h rv">Sobre a equipe</h2>
-          <p class="lead rv">Texto provisório: quem somos e o que nos move.</p>
           <div class="eg">
             <figure class="team rv" id="team"></figure>
             <div class="dv rv" id="acards"></div>
@@ -256,8 +250,7 @@
                 height="270"
             /></a>
             <p style="margin-top: 14px">
-              Texto provisório: aplicação desktop voltada à acessibilidade da
-              leitura.
+              Aplicação desktop voltada à acessibilidade da leitura.
             </p>
           </div>
           <div role="navigation" aria-label="Rodapé">
@@ -273,12 +266,8 @@
             <h3 class="fh">Contato</h3>
             <ul>
               <li><a href="#" id="fmail"></a></li>
-              <li id="fphone"></li>
+              <li><a href="#" id="fphone"></a></li>
             </ul>
-          </div>
-          <div>
-            <h3 class="fh">Redes sociais</h3>
-            <div class="soc" id="soc"></div>
           </div>
         </div>
         <div class="fbot">
@@ -290,115 +279,6 @@
     <div id="pr" hidden aria-hidden="true"></div>
     <div class="rhint" id="rhint" role="status" hidden>
       Régua ativa: mova o mouse ou use ↑ ↓. Esc para sair.
-    </div>
-    <div class="md" id="md" hidden>
-      <div class="mb" data-close></div>
-      <section
-        class="mc"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="mt"
-        tabindex="-1"
-      >
-        <button class="mx" type="button" aria-label="Fechar" data-close>
-          ×
-        </button>
-        <span class="plate"
-          ><img
-            class="lg sm"
-            src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-            alt="DislexIA"
-            width="925"
-            height="270"
-        /></span>
-        <h2 id="mt"></h2>
-        <p class="msub" id="ms"></p>
-        <form id="fl" novalidate hidden>
-          <div class="fld">
-            <label for="l-email">E-mail</label
-            ><input
-              id="l-email"
-              name="email"
-              type="email"
-              autocomplete="email"
-              required
-              aria-describedby="e-l-email"
-            /><small class="er" id="e-l-email"></small>
-          </div>
-          <div class="fld">
-            <label for="l-pass">Senha</label>
-            <div class="pw">
-              <input
-                id="l-pass"
-                name="senha"
-                type="password"
-                autocomplete="current-password"
-                required
-                aria-describedby="e-l-pass"
-              /><button type="button" data-eye aria-label="Mostrar senha">
-                Mostrar
-              </button>
-            </div>
-            <small class="er" id="e-l-pass"></small>
-          </div>
-          <button class="btn go" type="submit">Entrar</button>
-        </form>
-        <form id="fr" novalidate hidden>
-          <div class="fld">
-            <label for="r-nome">Nome</label
-            ><input
-              id="r-nome"
-              name="nome"
-              type="text"
-              autocomplete="name"
-              required
-              aria-describedby="e-r-nome"
-            /><small class="er" id="e-r-nome"></small>
-          </div>
-          <div class="fld">
-            <label for="r-email">E-mail</label
-            ><input
-              id="r-email"
-              name="email"
-              type="email"
-              autocomplete="email"
-              required
-              aria-describedby="e-r-email"
-            /><small class="er" id="e-r-email"></small>
-          </div>
-          <div class="fld">
-            <label for="r-pass">Senha</label>
-            <div class="pw">
-              <input
-                id="r-pass"
-                name="senha"
-                type="password"
-                autocomplete="new-password"
-                minlength="8"
-                required
-                aria-describedby="e-r-pass"
-              /><button type="button" data-eye aria-label="Mostrar senha">
-                Mostrar
-              </button>
-            </div>
-            <small class="er" id="e-r-pass"></small>
-          </div>
-          <div class="fld">
-            <label for="r-pass2">Confirmar senha</label
-            ><input
-              id="r-pass2"
-              name="senha2"
-              type="password"
-              autocomplete="new-password"
-              required
-              aria-describedby="e-r-pass2"
-            /><small class="er" id="e-r-pass2"></small>
-          </div>
-          <button class="btn go" type="submit">Criar conta</button>
-        </form>
-        <p class="msg" id="mm" role="status" aria-live="polite"></p>
-        <p class="sw" id="sw"></p>
-      </section>
     </div>
     <!-- Plugin Libras (VLibras) -->
     <div vw class="enabled">
@@ -436,16 +316,12 @@
         DOWNLOAD_URL: "",
         VERSION: "1.0",
         CREDITS: "Iasmin Gordilho, Marcus Fonseca e Tâmara Felix",
-        LOGIN_URL: "",
-        REGISTER_URL: "",
         MODEL_URL: "",
       };
-      const SOCIAL = [
-          ["Instagram", "#"],
-          ["LinkedIn", "#"],
-          ["GitHub", "#"],
-        ],
-        CONTACT = { email: "contato@exemplo.com", phone: "(00) 00000-0000" };
+      const CONTACT = {
+        email: "dislexia.sic@gmail.com",
+        phone: "(11) 93009-3726",
+      };
       const $ = (s) => document.querySelector(s),
         $$ = (s) => [...document.querySelectorAll(s)];
       const root = document.documentElement;
@@ -475,10 +351,7 @@
       $("#fmail").textContent = CONTACT.email;
       $("#fmail").href = "mailto:" + CONTACT.email;
       $("#fphone").textContent = CONTACT.phone;
-      $("#soc").innerHTML = SOCIAL.map(
-        (x) =>
-          `<a href="${x[1]}" rel="noopener" aria-label="${x[0]} do dislexIA">${x[0]}</a>`,
-      ).join("");
+      $("#fphone").href = "tel:+55" + CONTACT.phone.replace(/\D/g, "");
       /* demonstração em abas */
       const TXT = [
         "O texto parado cansa os olhos,",
@@ -489,7 +362,7 @@
         "Sem pressa e sem se perder.",
       ];
       const docH = (i, c) =>
-        `<div class="doc ${c || ""}"><div class="dl">${TXT.map((t) => `<span class="ln">${t}</span>`).join("")}<i class="rr" style="top:${i * 2.1}em"></i></div></div>`;
+        `<div class="doc ${c || ""}"><div class="dl">${TXT.map((t, k) => `<span class="ln${k === i ? " on" : ""}">${t}</span>`).join("")}</div></div>`;
       const bars =
         '<div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>';
       const SET =
@@ -555,21 +428,14 @@
             "</div></div>",
         ],
         [
-          "b4",
+          "b6",
           "Acesso Rápido",
           "Ative e desative a régua com um clique, no botão ao lado dela.",
           '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
           "",
         ],
         [
-          "b4",
-          "Cadastro e Login Simples",
-          "Texto provisório: crie sua conta e entre em poucos passos.",
-          '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>',
-          "",
-        ],
-        [
-          "b4",
+          "b6",
           "Ajuste de Leitura",
           "Escolha cor, transparência, altura e largura da régua, ou use a régua reversa.",
           '<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>',
@@ -583,22 +449,22 @@
       /* equipe */
       const ABOUT = {
         team: {
-          src: "",
-          alt: "Foto da equipe do dislexIA",
-          caption: "Equipe dislexIA — legenda provisória",
+          src: "img/team.png",
+          alt: "Equipe dislexIA: três estudantes sentados em uma escada, sob o letreiro do SENAI, sorrindo para a foto",
+          caption: "Equipe dislexIA",
         },
         cards: [
           [
             "Quem somos",
-            "Texto provisório: apresentação da equipe e da trajetória do projeto.",
+            "Estudantes do Samsung Innovation Campus, no curso de Inteligência Artificial.",
           ],
           [
             "Por que criamos o dislexIA",
-            "Texto provisório: a motivação da equipe para criar o projeto.",
+            "Começamos essa ideia por uma necessidade de acessibilidade no SENAI “Anchieta”, que virou nossa missão: conseguir ajudar e atender esse objetivo, dando autonomia às pessoas com dislexia.",
           ],
           [
-            "Como trabalhamos",
-            "Texto provisório: valores e forma de trabalho da equipe.",
+            "O que queremos com esse projeto",
+            "Queremos que esse projeto atenda a muitas pessoas e consiga gerar inclusão para as pessoas com essa condição. Queremos que a dislexia não seja impedimento para o aprendizado, entretenimento ou qualquer outro motivo.",
           ],
         ],
       };
@@ -709,200 +575,6 @@
       })();
       MQ.addEventListener &&
         MQ.addEventListener("change", (e) => setMo(e.matches));
-      /* ===== LOGIN / CADASTRO (popups) ===== */
-      let USER = null,
-        mode = "",
-        lastFocus = null;
-      const md = $("#md"),
-        dlg = md.querySelector(".mc"),
-        fL = $("#fl"),
-        fR = $("#fr"),
-        mm = $("#mm");
-      function renderAuth() {
-        document.querySelectorAll("[data-authbox]").forEach((b) => {
-          b.innerHTML = "";
-          if (USER) {
-            const w = document.createElement("span");
-            w.className = "who";
-            w.textContent = "Olá, " + USER;
-            const o = document.createElement("button");
-            o.className = "lnk";
-            o.type = "button";
-            o.dataset.out = "";
-            o.textContent = "Sair";
-            b.append(w, o);
-          } else
-            b.innerHTML =
-              '<button class="lnk" type="button" data-auth="login">Entrar</button>';
-        });
-      }
-      renderAuth();
-      function say(t, c) {
-        mm.textContent = t;
-        mm.className = "msg " + (c || "");
-      }
-      function clearErr(f) {
-        f.querySelectorAll("input").forEach((i) => {
-          i.removeAttribute("aria-invalid");
-        });
-        f.querySelectorAll(".er").forEach((e) => (e.textContent = ""));
-      }
-      function openAuth(m) {
-        mode = m;
-        lastFocus = document.activeElement;
-        const lg = m === "login";
-        fL.hidden = !lg;
-        fR.hidden = lg;
-        clearErr(fL);
-        clearErr(fR);
-        say("");
-        $("#mt").textContent = lg ? "Entrar" : "Criar conta";
-        $("#ms").textContent = lg
-          ? "Acesse sua conta para continuar."
-          : "Preencha os dados para criar sua conta.";
-        $("#sw").innerHTML = lg
-          ? 'Ainda não tem conta? <button class="lk" type="button" data-auth="register">Cadastre-se</button>'
-          : 'Já tem conta? <button class="lk" type="button" data-auth="login">Entrar</button>';
-        md.hidden = false;
-        document.documentElement.classList.add("lock");
-        requestAnimationFrame(() =>
-          requestAnimationFrame(() => md.classList.add("on")),
-        );
-        setTimeout(() => (lg ? fL : fR).querySelector("input").focus(), 60);
-      }
-      function closeAuth() {
-        if (md.hidden) return;
-        md.classList.remove("on");
-        document.documentElement.classList.remove("lock");
-        setTimeout(
-          () => {
-            md.hidden = true;
-          },
-          REDUCE ? 0 : 260,
-        );
-        lastFocus && lastFocus.focus && lastFocus.focus();
-      }
-      document.addEventListener("click", (e) => {
-        const a = e.target.closest("[data-auth]");
-        if (a) {
-          openAuth(a.dataset.auth);
-          return;
-        }
-        if (e.target.closest("[data-out]")) {
-          USER = null;
-          renderAuth();
-          return;
-        }
-        if (e.target.closest("[data-close]")) {
-          closeAuth();
-          return;
-        }
-        const ey = e.target.closest("[data-eye]");
-        if (ey) {
-          const i = ey.parentElement.querySelector("input"),
-            sh = i.type === "password";
-          i.type = sh ? "text" : "password";
-          ey.textContent = sh ? "Ocultar" : "Mostrar";
-          ey.setAttribute("aria-label", sh ? "Ocultar senha" : "Mostrar senha");
-        }
-      });
-      md.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-          closeAuth();
-          return;
-        }
-        if (e.key !== "Tab") return;
-        const f = [...dlg.querySelectorAll("button,input")].filter(
-          (x) => !x.closest("[hidden]") && !x.disabled,
-        );
-        if (!f.length) return;
-        const a = f[0],
-          z = f[f.length - 1];
-        if (e.shiftKey && document.activeElement === a) {
-          e.preventDefault();
-          z.focus();
-        } else if (!e.shiftKey && document.activeElement === z) {
-          e.preventDefault();
-          a.focus();
-        }
-      });
-      function bad(i, t) {
-        i.setAttribute("aria-invalid", "true");
-        $("#e-" + i.id).textContent = t;
-        return i;
-      }
-      function validate(f) {
-        clearErr(f);
-        const bads = [],
-          g = (n) => f.elements[n],
-          em = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (f === fR && g("nome").value.trim().length < 2)
-          bads.push(bad(g("nome"), "Informe seu nome."));
-        if (!em.test(g("email").value.trim()))
-          bads.push(bad(g("email"), "Informe um e-mail válido."));
-        if (f === fL) {
-          if (!g("senha").value)
-            bads.push(bad(g("senha"), "Informe sua senha."));
-        } else {
-          if (g("senha").value.length < 8)
-            bads.push(
-              bad(g("senha"), "A senha precisa ter pelo menos 8 caracteres."),
-            );
-          if (g("senha2").value !== g("senha").value)
-            bads.push(bad(g("senha2"), "As senhas não conferem."));
-        }
-        if (bads.length) {
-          bads[0].focus();
-          return false;
-        }
-        return true;
-      }
-      [fL, fR].forEach((f) =>
-        f.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          say("");
-          if (!validate(f)) return;
-          const url = f === fL ? CONFIG.LOGIN_URL : CONFIG.REGISTER_URL;
-          if (!url) {
-            say(
-              "A conexão com o servidor ainda não foi configurada, então nada foi enviado.",
-              "warn",
-            );
-            return;
-          }
-          const btn = f.querySelector("button[type=submit]"),
-            d = Object.fromEntries(new FormData(f));
-          delete d.senha2;
-          btn.disabled = true;
-          try {
-            const r = await fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(d),
-              }),
-              j = await r.json().catch(() => ({}));
-            if (!r.ok)
-              throw new Error(
-                j.message ||
-                  "Não foi possível concluir. Verifique os dados e tente novamente.",
-              );
-            if (f === fL) {
-              USER = j.name || j.nome || d.email;
-              renderAuth();
-              say("Login realizado.", "ok");
-              setTimeout(closeAuth, 900);
-            } else {
-              say("Conta criada! Agora é só entrar.", "ok");
-              setTimeout(() => openAuth("login"), 1200);
-            }
-          } catch (err) {
-            say(err.message || "Não foi possível conectar ao servidor.", "err");
-          } finally {
-            btn.disabled = false;
-          }
-        }),
-      );
-
       /* ===== MASCOTE 3D (GLB embutido; cabeça e mão deformadas por shader) ===== */
       (function () {
         const st = $(".stage"),
